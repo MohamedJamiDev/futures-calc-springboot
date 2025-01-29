@@ -1,21 +1,22 @@
 package com.futurescalculator.model;
 
 public class TradeResponse {
+    private double profitLoss;
 
-    private double profitOrLoss;
-
+    // No-argument constructor for deserialization
     public TradeResponse() {}
 
-    public TradeResponse(double profitOrLoss) {
-        this.profitOrLoss = profitOrLoss;
+    // Constructor with profitLoss
+    public TradeResponse(double profitLoss) {
+        this.profitLoss = profitLoss;
     }
 
-    // Getter and Setter
-    public double getProfitOrLoss() {
-        return profitOrLoss;
+    // Getters and Setters
+    public double getProfitLoss() {
+        return profitLoss;
     }
 
-    public void setProfitOrLoss(double profitOrLoss) {
-        this.profitOrLoss = profitOrLoss;
+    public void setProfitLoss(double profitLoss) {
+        this.profitLoss = profitLoss;
     }
 }

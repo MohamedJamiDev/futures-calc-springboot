@@ -1,19 +1,28 @@
 package com.futurescalculator.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Contract {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String contractType;
+    private double tickSize;
+    private double tickValue;
 
-    private String name; // Contract name
-    private double tickValue; // Tick value for calculations
+    // No-argument constructor for JPA
+    public Contract() {}
+
+    // Constructor for easier object creation
+    public Contract(String contractType, double tickSize, double tickValue) {
+        this.contractType = contractType;
+        this.tickSize = tickSize;
+        this.tickValue = tickValue;
+    }
 
     // Getters and Setters
     public Long getId() {
@@ -24,12 +33,20 @@ public class Contract {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getContractType() {
+        return contractType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setContractType(String contractType) {
+        this.contractType = contractType;
+    }
+
+    public double getTickSize() {
+        return tickSize;
+    }
+
+    public void setTickSize(double tickSize) {
+        this.tickSize = tickSize;
     }
 
     public double getTickValue() {
@@ -40,5 +57,4 @@ public class Contract {
         this.tickValue = tickValue;
     }
 }
-
 
