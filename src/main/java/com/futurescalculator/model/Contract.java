@@ -14,17 +14,15 @@ public class Contract {
     private double tickSize;
     private double tickValue;
 
-    // No-argument constructor for JPA
+
     public Contract() {}
 
-    // Constructor for easier object creation
     public Contract(String contractType, double tickSize, double tickValue) {
         this.contractType = contractType;
         this.tickSize = tickSize;
         this.tickValue = tickValue;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

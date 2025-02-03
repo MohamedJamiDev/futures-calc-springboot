@@ -5,11 +5,12 @@ public class TradeRequest {
     private double exitPrice;
     private int numberOfContracts;
     private String contractType;
+    private String tradeDirection;
+
 
     public double getEntryPrice() {
         return entryPrice;
     }
-
     public void setEntryPrice(double entryPrice) {
         this.entryPrice = entryPrice;
     }
@@ -17,7 +18,6 @@ public class TradeRequest {
     public double getExitPrice() {
         return exitPrice;
     }
-
     public void setExitPrice(double exitPrice) {
         this.exitPrice = exitPrice;
     }
@@ -25,7 +25,6 @@ public class TradeRequest {
     public int getNumberOfContracts() {
         return numberOfContracts;
     }
-
     public void setNumberOfContracts(int numberOfContracts) {
         this.numberOfContracts = numberOfContracts;
     }
@@ -33,8 +32,14 @@ public class TradeRequest {
     public String getContractType() {
         return contractType;
     }
-
     public void setContractType(String contractType) {
         this.contractType = contractType;
+    }
+
+    public String getTradeDirection() {
+        return tradeDirection;
+    }
+    public void setTradeDirection(String tradeDirection) {
+        this.tradeDirection = tradeDirection;
     }
 }

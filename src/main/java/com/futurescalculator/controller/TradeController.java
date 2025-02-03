@@ -4,6 +4,7 @@ import com.futurescalculator.model.TradeRequest;
 import com.futurescalculator.model.TradeResponse;
 import com.futurescalculator.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,12 @@ public class TradeController {
     private TradeService tradeService;
 
     @PostMapping
-    public TradeResponse calculateProfitLoss(@RequestBody TradeRequest tradeRequest) {
-        return tradeService.calculateProfitLoss(tradeRequest);
+    public ResponseEntity<TradeResponse> calculateProfitLoss(@RequestBody TradeRequest tradeRequest) {
+        try {
+            TradeResponse response = tradeService.calculateProfitLoss(tradeRequest);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new TradeResponse(0));
+        }
     }
 }

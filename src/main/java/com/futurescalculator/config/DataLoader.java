@@ -14,7 +14,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Preload some contract data
         contractRepository.save(new Contract("ES", 0.25, 12.50));
         contractRepository.save(new Contract("NQ", 0.25, 5.00));
         contractRepository.save(new Contract("CL", 0.01, 10.00));
