@@ -8,6 +8,9 @@ import com.futurescalculator.repository.ContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @Service
 public class TradeService {
 
@@ -21,24 +24,38 @@ public class TradeService {
         }
 
         if (tradeRequest.getTradeDirection() == null ||
-                (!tradeRequest.getTradeDirection().equalsIgnoreCase("LONG") &&
-                        !tradeRequest.getTradeDirection().equalsIgnoreCase("SHORT"))) {
-            throw new IllegalArgumentException("Invalid trade direction. Must be 'LONG' or 'SHORT'.");
+                (!tradeRequest.getTradeDirection().equalsIgnoreCase("BUY") &&
+                        !tradeRequest.getTradeDirection().equalsIgnoreCase("SELL"))) {
+            throw new IllegalArgumentException("Invalid trade direction. Must be 'BUY' or 'SELL'.");
         }
 
-        double priceDifference = tradeRequest.getExitPrice() - tradeRequest.getEntryPrice();
+        double rawProfitOrLoss = calculateProfitOrLoss(
+                tradeRequest.getEntryPrice(),
+                tradeRequest.getExitPrice(),
+                tradeRequest.getNumberOfContracts(),
+                contract,
+                tradeRequest.getTradeDirection()
+        );
 
-        // Reverse price difference for SHORT trades
-        if ("SHORT".equalsIgnoreCase(tradeRequest.getTradeDirection())) {
-            priceDifference = -priceDifference;
+        BigDecimal profitOrLoss = BigDecimal.valueOf(rawProfitOrLoss).setScale(2, RoundingMode.HALF_UP);
+        String statusMessage;
+
+        if (profitOrLoss.doubleValue() > 0) {
+            statusMessage = "Profit: $" + profitOrLoss;
+        } else if (profitOrLoss.doubleValue() < 0) {
+            statusMessage = "Loss: $" + profitOrLoss; 
+        } else {
+            statusMessage = "Break-even (no profit or loss)";
         }
 
-        // Convert price difference to ticks
-        double ticks = priceDifference / contract.getTickSize();
+        return new TradeResponse(statusMessage);
+    }
 
-        // Calculate profit/loss
-        double profitLoss = ticks * contract.getTickValue() * tradeRequest.getNumberOfContracts();
+    private double calculateProfitOrLoss(double entryPrice, double exitPrice,
+                                         int numberOfContracts, Contract contract, String tradeDirection) {
+        double pointDifference = tradeDirection.equalsIgnoreCase("BUY") ?
+                exitPrice - entryPrice : entryPrice - exitPrice;
 
-        return new TradeResponse(profitLoss);
+        return pointDifference * contract.getTickValue() * numberOfContracts;
     }
 }

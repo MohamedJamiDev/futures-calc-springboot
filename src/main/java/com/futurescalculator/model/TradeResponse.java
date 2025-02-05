@@ -1,19 +1,17 @@
 package com.futurescalculator.model;
 
 public class TradeResponse {
-    private double profitLoss;
+    private String message;
 
-    public TradeResponse() {}
-
-    public TradeResponse(double profitLoss) {
-        this.profitLoss = profitLoss;
+    public TradeResponse(String message) {
+        this.message = message;
     }
 
-    public double getProfitLoss() {
-        return profitLoss;
+    public String getMessage() {
+        return message;
     }
 
-    public void setProfitLoss(double profitLoss) {
-        this.profitLoss = profitLoss;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
